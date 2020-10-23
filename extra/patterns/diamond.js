@@ -1,5 +1,6 @@
 let args = process.argv.slice(2)
-function diamond(args) {
+export default function diamond(args) {
+    console.log("Diamond for rows = "+args)
     args = args * 2
     let num = args / 2
     let num2 = 1

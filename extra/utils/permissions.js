@@ -1,15 +1,16 @@
-let permissions= {
-    'getUsers': {
-        'all': ['head-trainer'],
-        'read': ['trainee', 'trainer'],
-        'write': ['trainer'],
-        'delete': [],
-    }
-}
+// let permissions= {
+//     'getUsers': {
+//         'all': ['head-trainer'],
+//         'read': ['trainee', 'trainer'],
+//         'write': ['trainer'],
+//         'delete': [],
+//     }
+// }
+import {permissions} from '../constants'
 
-function hasPermission(moduleName,role,permissionType)
+export default function hasPermission(moduleName,role,permissionType)
 {
-   
+   console.log("Permissions module is started and verify the permissions")
     if(permissions[moduleName]!== undefined)
     {
         console.log("Module Name found")
@@ -63,4 +64,4 @@ function hasPermission(moduleName,role,permissionType)
     }
 }
 
-console.log(hasPermission('getUsers','trainer','delete'));
+//console.log(hasPermission('getUsers','trainer','delete'));

@@ -1,6 +1,7 @@
 let args = process.argv.slice(2)
 
-function euilateral(args) {
+export default function euilateral(args) {
+    console.log("Equilateral for rows = "+args)
     for (let i = 1; i <= args; i++) {
         let space = " "
         let star = "* "
