@@ -16,6 +16,14 @@ function hasPermission(moduleName,role,permissionType)
         if(permissions[moduleName][permissionType]!==undefined)
         {
             console.log("Permission Type found")
+            if(permissions[moduleName][permissionType]!=='all')
+            {
+                if(permissions[moduleName]['all'].indexOf(role)!==-1)
+                {
+                    console.log("Role found")
+                    return true;
+                }
+            }
             if(permissions[moduleName][permissionType].length>0)
             {
                 if(permissions[moduleName][permissionType].indexOf(role)!==-1)
@@ -55,4 +63,4 @@ function hasPermission(moduleName,role,permissionType)
     }
 }
 
-console.log(hasPermission('getUsers','','delete'));
+console.log(hasPermission('getUsers','trainer','delete'));
