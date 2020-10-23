@@ -1,4 +1,3 @@
-let args=process.argv.slice(2)
 args=args*2
 let num=args/2
 let num2=1
