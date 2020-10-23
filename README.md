@@ -15,6 +15,8 @@ Note: In extra/Patterns folder, the programs should run with command line argume
 
 For Branch 39519,
 
-1.On terminal, write this command "npm i"
-2.On terminal, write this command "npm run extra"
+1.On terminal, write this command "npm i".
+
+2.On terminal, write this command "npm run extra".
+
 3.Verify that every file is executed through the single command because In this branch we are using Import and Export features, through the feature every file imported on a target folder i.e extra.
