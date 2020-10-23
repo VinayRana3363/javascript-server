@@ -1,27 +1,5 @@
 import {validateEmail} from './helpers'
 
-// const users=[
-//     {
-//         traineeEmail: 'trainee1@successive.tech',
-//         reviewerEmail: 'reviewer1@successive.tech',
-//     },
-//     {
-//         traineeEmail: 'trainee2@successive.tech',
-//         reviewerEmail: 'reviewer2@successive.tech',
-//     },
-
-//     {
-//         traineeEmail: 'trainee3@gmail.com',
-//         reviewerEmail: 'reviewer3@successive.tech',
-//     }
-// ]
-
-// function validateEmail(email)
-// {
-//     const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@successive.tech$/
-//     return re.test(email);
-// }
-
 export default function validateUsers(users)
 {
     console.log("User validation starts.......")

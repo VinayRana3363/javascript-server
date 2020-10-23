@@ -1,11 +1,4 @@
-// let permissions= {
-//     'getUsers': {
-//         'all': ['head-trainer'],
-//         'read': ['trainee', 'trainer'],
-//         'write': ['trainer'],
-//         'delete': [],
-//     }
-// }
+
 import {permissions} from '../constants'
 
 export default function hasPermission(moduleName,role,permissionType)
@@ -64,4 +57,4 @@ export default function hasPermission(moduleName,role,permissionType)
     }
 }
 
-//console.log(hasPermission('getUsers','trainer','delete'));
+
