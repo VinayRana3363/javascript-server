@@ -1,15 +1,15 @@
-import permissions from "./interfaces"
+import permissions from './interfaces';
 
-let permissions= {
+const permissions:permissions = {
     'getUsers': {
-        'all': ['head-trainer'],
-        'read': ['trainee', 'trainer'],
-        'write': ['trainer'],
-        'delete': [],
+        all: ['head-trainer'],
+        read: ['trainee', 'trainer'],
+        write: ['trainer'],
+        delete: [],
     }
-}
+};
 
-const users=[
+const users = [
     {
         traineeEmail: 'trainee1@successive.tech',
         reviewerEmail: 'reviewer1@successive.tech',
@@ -23,6 +23,6 @@ const users=[
         traineeEmail: 'trainee3@gmail.com',
         reviewerEmail: 'reviewer3@successive.tech',
     }
-]
+];
 
-export {permissions,users};
+export { permissions , users };
