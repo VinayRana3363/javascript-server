@@ -1,10 +1,9 @@
-/* eslint @typescript-eslint/no-var-requires: "off" */
 
-import env from './IConfig';
+import * as dotenv from 'dotenv';
+import IConfig from './IConfig';
 
-const enVars = require('dotenv').config();
-
-const config: env = enVars.parsed;
+const enVars = dotenv.config().parsed;
+const config = enVars;
 Object.freeze(config);
 
 export default config;

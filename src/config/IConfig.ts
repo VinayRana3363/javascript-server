@@ -1,6 +1,5 @@
-import { config } from 'dotenv/types';
 
-export default interface Env {
-    PORT: number;
+export default interface IConfig {
+    PORT: string;
     NODE_ENV: string;
 }
