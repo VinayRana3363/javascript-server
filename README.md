@@ -29,3 +29,11 @@ For Branch 39520,
 2.On terminal, write this command "npm run extra".
 
 Note: Needs to verify that Every function must have types defined for arguments and also the return value.
+
+For Branch 39524,
+
+1.On terminal, write this command "npm i".
+
+2.On terminal, write this command "npm start".
+
+Note: Needs to verify that passed data through postman for different request is valid while comparing the with given congif on the basis of output we get.
