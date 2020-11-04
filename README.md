@@ -37,3 +37,17 @@ For Branch 39524,
 2.On terminal, write this command "npm start".
 
 Note: Needs to verify that passed data through postman for different request is valid while comparing the with given congif on the basis of output we get.
+
+For Branch 39524,
+
+1.On terminal, write this command "npm i".
+
+2.On terminal, write this command "npm start".
+
+3.Needs to create the token using these properties ({ "iss": "Successive Technologies", "iat": 1548690437, "exp": 1580226437, "aud": "www.successive.in&quot;, "sub": "Learn and 
+
+Implement", "name": "Trainee", "email": "trainee@successive.tech", "role": "trainee" }) and this key (qwertyuiopasdfghjklzxcvbnm123456).
+
+4.Then hit the url(http://localhost:9000/api/trainee/) with genrated token.
+
+5.Verify the task.
