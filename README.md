@@ -38,7 +38,7 @@ For Branch 39524,
 
 Note: Needs to verify that passed data through postman for different request is valid while comparing the with given congif on the basis of output we get.
 
-For Branch 39524,
+For Branch 40009,
 
 1.On terminal, write this command "npm i".
 
@@ -51,3 +51,12 @@ Implement", "name": "Trainee", "email": "trainee@successive.tech", "role": "trai
 4.Then hit the url(http://localhost:9000/api/trainee/) with genrated token.
 
 5.Verify the task.
+
+
+For Branch 40010,
+
+1.On terminal, write this command "npm i".
+
+2.On terminal, write this command "npm start".
+
+3. Veriify that MongoDb is started and and close by calling these two functions - open, close inside Database file.
