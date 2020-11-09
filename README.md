@@ -60,3 +60,11 @@ For Branch 40010,
 2.On terminal, write this command "npm start".
 
 3. Veriify that MongoDb is started and and close by calling these two functions - open, close inside Database file.
+
+For Branch 40011,
+
+1.On terminal, write this command "npm i".
+
+2.On terminal, write this command "npm start".
+
+3. Veriify that MongoDb is started and user are stored using seedData file input.
