@@ -1,4 +1,5 @@
 import * as mongooose from 'mongoose';
+import seedData from './seedData';
 
 export default class Database {
     static open(connectionString) {
@@ -10,6 +11,7 @@ export default class Database {
                     reject(err);
                     return;
                 }
+                seedData();
                 resolve(undefined);
             });
         });

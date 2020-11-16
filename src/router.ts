@@ -7,4 +7,6 @@ const mainRouter = Router();
 
 mainRouter.use('/trainee', traineeRouter);
 
+mainRouter.use('/user', traineeRouter);
+
 export default mainRouter;
