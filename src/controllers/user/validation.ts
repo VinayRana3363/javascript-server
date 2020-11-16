@@ -45,6 +45,18 @@ const config = {
                 console.log('Inside custom funaton in update', dataToUpdate);
             },
         }
+    },
+    login: {
+        email: {
+            required: true,
+            string: true,
+            in: ['body']
+        },
+        password: {
+            required: true,
+            string: true,
+            in: ['body']
+        }
     }
 };
 

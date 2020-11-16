@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { traineeRouter } from './controllers';
+import { traineeRouter, userRouter } from './controllers';
 
 // const mainRouter = new (Router as any)();
 
@@ -7,6 +7,6 @@ const mainRouter = Router();
 
 mainRouter.use('/trainee', traineeRouter);
 
-mainRouter.use('/user', traineeRouter);
+mainRouter.use('/user', userRouter);
 
 export default mainRouter;
