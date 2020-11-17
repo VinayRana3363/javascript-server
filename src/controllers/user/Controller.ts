@@ -83,7 +83,8 @@ class UserController {
         try {
             const { email, password } = req.body;
 
-            userModel.findOne((err, result) => {
+
+            userModel.findOne({'email': email}, (err, result) => {
                 if (result) {
                     if ((email === result.email) && (password === result.password)) {
                         console.log('result is', result.password, result.name);

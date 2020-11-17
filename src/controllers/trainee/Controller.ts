@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import UserRepository from '../../repositories/user/UserRepository';
 
 class TraineeController {
 
@@ -14,65 +15,77 @@ class TraineeController {
         return TraineeController.instances;
     }
 
-    get( req: Request, res: Response, next: NextFunction) {
+    userRepository: UserRepository = new UserRepository();
+
+    get = ( req: Request, res: Response, next: NextFunction) => {
         try {
             console.log('Inside get function of Trainee Controller');
-            res.send({
-                message: 'Trainee fatch sucessfully',
-                data: [
-                    {
-                        name: 'Trainee1',
-                        address: 'Noida'
-                    }
-                ]
+            this.userRepository.find({deletedAt: undefined}, {}, {})
+            .then ((resp) => {
+                console.log('Response of Repo is', resp);
+                res.send({
+                    message: 'Trainee fatch sucessfully',
+                    data: resp
+                });
             });
         } catch (err) {
             console.log('Inside err');
         }
     }
 
-    create( req: Request, res: Response, next: NextFunction) {
+    create = ( req: Request, res: Response, next: NextFunction) => {
         try {
             console.log('Inside post function of Trainee Controller');
-            res.send({
-                message: 'Trainee created sucessfully',
-                data: {
-                        name: 'Trainee1',
-                        address: 'Noida'
-                    }
+            this.userRepository.create(req.body)
+            .then ((resp) => {
+                console.log('Response of Repo is', resp);
+                res.send({
+                    message: 'Trainee fatch sucessfully',
+                    data: resp
+                });
             });
         } catch (err) {
-            console.log('Inside err');
+            console.log('Inside err', err);
         }
     }
 
-    update( req: Request, res: Response, next: NextFunction) {
+    update = ( req: Request, res: Response, next: NextFunction) => {
         try {
             console.log('Inside put function of Trainee Controller');
-            res.send({
-                message: 'Trainee updated sucessfully',
-                data: {
-                        name: 'Trainee1',
-                        address: 'Noida'
-                    }
+            this.userRepository.update(req.body)
+            .then ((resp) => {
+                console.log('Response of Repo is', resp);
+                res.send({
+                    message: 'Trainee updated sucessfully',
+                    data: resp
+                });
+            })
+            .catch((err) => {
+                console.log(err);
             });
         } catch (err) {
-            console.log('Inside err');
+            console.log('Inside err', err);
         }
     }
 
     delete( req: Request, res: Response, next: NextFunction) {
         try {
             console.log('Inside delete function of Trainee Controller');
-            res.send({
-                message: 'Trainee delete sucessfully',
-                data: {
-                        name: 'Trainee1',
-                        address: 'Noida'
-                    }
+            const userRepository = new UserRepository();
+            console.log('id', req.body);
+            userRepository.delete(req.body.id)
+            .then ((resp) => {
+                console.log('Response of Repo is', resp);
+                res.send({
+                    message: 'Trainee deleted sucessfully',
+                    data: resp
+                });
+            })
+            .catch((err) => {
+                console.log(err);
             });
         } catch (err) {
-            console.log('Inside err');
+            console.log('Inside err', err);
         }
     }
 }
