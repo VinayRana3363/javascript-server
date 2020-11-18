@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import { userModel } from '../../repositories/user/UserModel';
 import * as jwt from 'jsonwebtoken';
 import IRequest from '../../IRequest';
+import config from '../../config/configuration';
+import * as bcrypt from 'bcrypt';
 
 class UserController {
 
@@ -86,12 +88,12 @@ class UserController {
 
             userModel.findOne({'email': email}, (err, result) => {
                 if (result) {
-                    if ((email === result.email) && (password === result.password)) {
+                    if ((email === result.email && bcrypt.compareSync(password, result.password))) {
                         console.log('result is', result.password, result.name);
                         console.log(result);
                         const token = jwt.sign({
                             result
-                        }, 'qwertyuiopasdfghjklzxcvbnm123456');
+                        }, config.secretKey,  { expiresIn: '15m' });
                         console.log(token);
                         res.send({
                             data: token,

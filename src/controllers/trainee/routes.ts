@@ -12,8 +12,8 @@ const traineeRouter = Router();
 
 traineeRouter.route('/')
     .get(authMiddleWare(permissions.getUsers, 'read'), validationHandler(validation.get), traineeController.get)
-    .post(authMiddleWare(permissions.getUsers , 'read'), traineeController.create)
-    .put(authMiddleWare(permissions.getUsers , 'read'), traineeController.update);
-    traineeRouter.route('/').delete(authMiddleWare(permissions.getUsers , 'read'), traineeController.delete);
+    .post( traineeController.create)
+    .put(authMiddleWare(permissions.getUsers , 'read'), validationHandler(validation.update), traineeController.update);
+    traineeRouter.route('/').delete(authMiddleWare(permissions.getUsers , 'read'), validationHandler(validation.delete), traineeController.delete);
 
 export default traineeRouter;
