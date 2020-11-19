@@ -4,10 +4,9 @@ export default (config) => (req, res, next) => {
     const errors = [];
     let index = 0;
     console.log('Inside validation Handler');
-
     for (const prop in config) {
         if (config.hasOwnProperty(prop)) {
-            inputData = (req[config[prop].in]);
+            inputData = Object.create(req[config[prop].in]);
             console.log('prop', prop, inputData);
             console.log('Input data values ', inputData[prop]);
 

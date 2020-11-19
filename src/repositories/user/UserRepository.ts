@@ -3,6 +3,7 @@ import { userModel } from './UserModel';
 import IUserMOdel from './IUserModel';
 
 import VersionableRepository from '../versionable/VersionableRepository';
+import { parse } from 'dotenv/types';
 
 export default class UserRepository extends VersionableRepository<IUserMOdel, mongoose.Model<IUserMOdel>> {
     constructor() {
@@ -12,8 +13,12 @@ export default class UserRepository extends VersionableRepository<IUserMOdel, mo
         return String(mongoose.Types.ObjectId());
     }
 
-    public find(query, projection ?: any, options ?: any): any {
-        return super.find(query, projection, options);
+    public find(query, projection ?: any, options ?: any, skip?: any , limit?: any): any {
+        console.log("inside user repo");
+        const num = parseInt(skip);
+        const num1 = parseInt(limit);
+        console.log("parsed successfully");
+        return super.find(query, projection, options).skip(num).limit(num1).sort({name : 1});
     }
 
     public findOne(query): mongoose.DocumentQuery<IUserMOdel, IUserMOdel, {}> {
