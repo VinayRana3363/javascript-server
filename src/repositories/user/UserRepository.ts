@@ -13,12 +13,9 @@ export default class UserRepository extends VersionableRepository<IUserMOdel, mo
         return String(mongoose.Types.ObjectId());
     }
 
-    public find(query, projection ?: any, options ?: any, skip?: any , limit?: any): any {
-        console.log("inside user repo");
-        const num = parseInt(skip);
-        const num1 = parseInt(limit);
-        console.log("parsed successfully");
-        return super.find(query, projection, options).skip(num).limit(num1).sort({name : 1});
+    public find(query, projection ?: any, options ?: any, skip?: any , limit?: any, type?: any): any {
+        console.log('inside user repo');
+        return super.find(query, projection, options);
     }
 
     public findOne(query): mongoose.DocumentQuery<IUserMOdel, IUserMOdel, {}> {
@@ -27,11 +24,6 @@ export default class UserRepository extends VersionableRepository<IUserMOdel, mo
 
     public create(data: any): Promise<IUserMOdel> {
         console.log('UserRepository:: create', data);
-        // const id = UserRepository.generateObjectId();
-        // const model = new userModel ({
-        //     _id: id,
-        //     ...data,
-        // });
         return super.create(data);
     }
 

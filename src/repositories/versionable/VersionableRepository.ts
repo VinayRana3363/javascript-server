@@ -42,6 +42,7 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
     }
 
     protected find(query, projection, options): DocumentQuery<D[], D> {
+        console.log('inside versionable repo');
         const finalQuery = { deletedAt: undefined, ...query };
         return this.model.find(finalQuery, projection, options);
     }
