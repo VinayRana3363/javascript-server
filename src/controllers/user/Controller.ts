@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import { userModel } from '../../repositories/user/UserModel';
 import * as jwt from 'jsonwebtoken';
 import IRequest from '../../IRequest';
 import config from '../../config/configuration';
@@ -22,86 +21,14 @@ class UserController {
 
     userRepository: UserRepository = new UserRepository();
 
-    get = ( req: Request, res: Response, next: NextFunction) => {
-        try {
-            console.log('Inside get function of Trainee Controller');
-            const { skip, limit } = req.query;
-            this.userRepository.find({ deletedAt: undefined }, {}, {}, skip, limit)
-            .then ((resp) => {
-                console.log('Response of Repo is', resp);
-                res.send({
-                    message: `Trainee fatch sucessfully and the total number of records are ${resp.length}`,
-                    data: resp
-                });
-            });
-        } catch (err) {
-            console.log('Inside err');
-        }
-    }
 
-    create = ( req: Request, res: Response, next: NextFunction) => {
-        try {
-            console.log('Inside post function of Trainee Controller');
-            this.userRepository.create(req.body)
-            .then ((resp) => {
-                console.log('Response of Repo is', resp);
-                res.send({
-                    message: 'Trainee fatch sucessfully',
-                    data: resp
-                });
-            });
-        } catch (err) {
-            console.log('Inside err', err);
-        }
-    }
-
-    update = ( req: Request, res: Response, next: NextFunction) => {
-        try {
-            console.log('Inside put function of Trainee Controller');
-            this.userRepository.update(req.body.dataToUpdate)
-            .then ((resp) => {
-                console.log('Response of Repo is', resp);
-                res.send({
-                    message: 'Trainee updated sucessfully',
-                    data: resp
-                });
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        } catch (err) {
-            console.log('Inside err', err);
-        }
-    }
-
-    delete( req: Request, res: Response, next: NextFunction) {
-        try {
-            console.log('Inside delete function of Trainee Controller');
-            const userRepository = new UserRepository();
-            console.log('id', req.params.id);
-            userRepository.delete(req.params.id)
-            .then ((resp) => {
-                console.log('Response of Repo is', resp);
-                res.send({
-                    message: 'Trainee deleted sucessfully',
-                    data: resp
-                });
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        } catch (err) {
-            console.log('Inside err', err);
-        }
-    }
-
-    login( req: Request, res: Response, next: NextFunction) {
+    login = async( req: Request, res: Response, next: NextFunction) => {
         try {
             const { email, password } = req.body;
-            userModel.findOne({'email': email}, (err, result) => {
+            const result = await this.userRepository.findOne({'email': email});
                 if (result) {
                     console.log(result.password, password);
-                    console.log(bcrypt.compareSync(password, result.password));
+                    console.log(bcrypt.compareSync(result.password, password));
                     if (bcrypt.compareSync(password, result.password)) {
                         console.log('result is', result.password, result.name);
                         console.log(result);
@@ -110,33 +37,35 @@ class UserController {
                         }, config.secretKey,  { expiresIn: '15m' });
                         console.log(token);
                         res.send({
-                            data: token,
                             message: 'Login Permited',
-                            status: 200
+                            Token: token,
+                            code: 200
                         });
                     }
                     else {
                         console.log('database data', result.password, result.email, email, password );
-                        res.send({
+                        next({
                             message: 'Password Doesnt Match',
-                            status: 400
+                            code: 400
                         });
                     }
                 }
                 else {
-                    res.send({
+                    next({
                         message: 'Email is not Registered',
-                        status: 404
+                        code: 400
                     });
                 }
-            });
         }
         catch (err) {
-            res.send(err);
+            next({
+                error: err,
+                code: 404
+            });
         }
     }
 
-    me(req: IRequest, res: Response, next: NextFunction) {
+    me = (req: IRequest, res: Response, next: NextFunction) => {
         console.log('User' , req.user);
         const user = req.user;
         res.json({

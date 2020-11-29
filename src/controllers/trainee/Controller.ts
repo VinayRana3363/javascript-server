@@ -21,28 +21,36 @@ class TraineeController {
         try {
             console.log('Inside get function of Trainee Controller');
             // tslint:disable-next-line: prefer-const
-            let { skip, limit, sort } = req.query;
-            const query = req.body;
-            let traineeCount = 0;
-            sort = (sort === undefined || sort.length === 0 ) ? 'createdAt' : sort;
-            console.log('sort value', sort, typeof(sort), sort.length);
+            let { skip, limit, sort, search } = req.query;
+            let query;
+            sort = (sort === undefined || sort.length === 0) ? 'createdAt' : sort;
+            if (!(search === undefined || search.length === 0)) {
+                const regex = /\S+@\S+\.\S+/;
+                query = (regex.test(String(search))) ? { email: search } : { name: search };
+            }
+            console.log('sort value', sort, typeof (sort), sort.length, query);
             // tslint:disable-next-line: object-literal-shorthand
-            await this.userRepository.find({ ...query }, {}, {skip: Number(skip), limit: Number(limit), sort: { [String(sort)] : -1} })
-                .then((resp) => {
-                    for (const users of resp) {
-                        if (users.role === 'trainee')
-                            traineeCount++;
-                    }
-                    console.log('Response of Repo is', resp);
-                    res.send({
-                        message: `Trainee fatch sucessfully and the total number of trainees are ${traineeCount}`,
-                        data: resp || ''
-                    });
+            const trainee = await this.userRepository.find({ ...query }, {}, { skip: Number(skip), limit: Number(limit), sort: { [String(sort)]: -1 }, collation: { locale: 'en' } });
+            const traineeCount = await this.userRepository.count({ role: 'trainee' });
+            if (trainee) {
+                console.log('Response of Repo is', trainee);
+                res.send({
+                    message: `Trainee fatch sucessfully`,
+                    TotalCount: trainee.length,
+                    TraineeCount: traineeCount,
+                    data: trainee
                 });
+            }
+            else {
+                next({
+                    message: 'No record found',
+                    code: 404
+                });
+            }
         } catch (err) {
-            console.log('Inside err');
-            res.send({
-                message: 'No record found' ,
+            console.log('Inside err', err);
+            next({
+                message: 'No record found',
                 code: 404
             });
         }
@@ -51,14 +59,14 @@ class TraineeController {
     create = async (req: Request, res: Response, next: NextFunction) => {
         try {
             console.log('Inside post function of Trainee Controller');
-            await this.userRepository.create(req.body)
-                .then((resp) => {
-                    console.log('Response of Repo is', resp);
-                    res.send({
-                        message: 'Trainee fatch sucessfully',
-                        data: resp
-                    });
+            const trainee = await this.userRepository.create(req.body.userData);
+            if (trainee) {
+                console.log('Response of Repo is', trainee);
+                res.send({
+                    message: 'Trainee fatch sucessfully',
+                    data: trainee
                 });
+            }
         } catch (err) {
             console.log('Inside err', err);
         }
@@ -67,17 +75,19 @@ class TraineeController {
     update = async (req: Request, res: Response, next: NextFunction) => {
         try {
             console.log('Inside put function of Trainee Controller');
-            await this.userRepository.update(req.body.dataToUpdate)
-                .then((resp) => {
-                    console.log('Response of Repo is', resp);
-                    res.send({
-                        message: 'Trainee updated sucessfully',
-                        data: resp
-                    });
-                })
-                .catch((err) => {
-                    console.log(err);
+            const dataToUpdate = {
+                'originalId': req.body.originalId,
+                'dataToUpdate': req.body.dataToUpdate
+            };
+            const trainee = await this.userRepository.update(dataToUpdate);
+            if (trainee) {
+                console.log('Response of Repo is', trainee);
+                res.send({
+                    message: 'Trainee updated sucessfully',
+                    data: trainee,
+                    code: 200
                 });
+            }
         } catch (err) {
             console.log('Inside err', err);
         }
@@ -87,24 +97,19 @@ class TraineeController {
         try {
             console.log('Inside delete function of Trainee Controller');
             console.log('id', req.params);
-            await this.userRepository.delete(req.params.id)
-                .then((resp) => {
-                    console.log('Response of Repo is', resp);
-                    res.send({
-                        message: 'Trainee deleted sucessfully',
-                        data: resp
-                    });
-                })
-                .catch((err) => {
-                    console.log('enter try catch');
-                    console.log(err);
+            const trainee = await this.userRepository.delete(req.params.id);
+            if (trainee) {
+                console.log('Response of Repo is', trainee );
+                res.send({
+                    message: 'Trainee deleted sucessfully',
+                    data: trainee
                 });
+            }
         } catch (err) {
-            console.log('enter delete catch');
             console.log('Inside err', err);
         }
 
     }
 }
 
-    export default TraineeController.getInstance();
+export default TraineeController.getInstance();

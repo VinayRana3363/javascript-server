@@ -1,17 +1,18 @@
 import * as jwt from 'jsonwebtoken';
 import hasPermissio from '../permissions';
-import { userModel } from '../../repositories/user/UserModel';
 import config from '../../config/configuration';
+import UserRepository from '../../repositories/user/UserRepository';
 
-export default (module, permissionType) => (req, res, next) => {
+export default (module, permissionType) => async (req, res, next) => {
     try {
+         const userRepository = new UserRepository();
         console.log('Module and permission is', module, permissionType);
         console.log('header', req.header('authorization'));
         const token = req.header('authorization');
         const decode = jwt.verify(token, config.secretKey).result;
         console.log('decoded user', decode);
         console.log('email nad password', decode.email, decode.password, decode.role);
-        userModel.findOne({ email: decode.email}, (err, result) => {
+        const result = await userRepository.findOne({'email': decode.email});
             if (!result) {
                 return next({
                     error: 'User not existing in db',
@@ -31,7 +32,6 @@ export default (module, permissionType) => (req, res, next) => {
                 });
             }
             return next();
-        });
     } catch (err) {
         next({
             error: 'Unauthorized',

@@ -1,15 +1,13 @@
 const config = {
     create: {
-        id: {
-            required: true,
-            string: true,
+        userData: {
             in: ['body'],
-            custom: (value) => {
-                console.log('Value', value);
-                throw { error: 'Error Occured', message: 'Message' };
-            }
-        },
-        name: { required: true, regex: '', in: ['body'], errorMessage: 'Name is required', }
+            required: true,
+            isObject: true,
+            custom: (userData) => {
+                console.log('Inside custom funaton in update', userData);
+            },
+        }
     },
     delete: {
         id: {
@@ -32,7 +30,7 @@ const config = {
         }
     },
     update: {
-        id: {
+        originalId: {
             required: true,
             string: true,
             in: ['body']

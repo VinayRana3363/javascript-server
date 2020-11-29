@@ -58,6 +58,6 @@ export default (config) => (req, res, next) => {
         }
 
     }
-    (errors.length > 0) ? next(errors) : next();
+    (errors.length > 0) ? next({ error : errors, code: 404}) : next();
 
 };

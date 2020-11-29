@@ -54,19 +54,14 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
 
     public async delete(id: string): Promise<D> {
         const previous = await this.findOne({ originalId: id, deletedAt: undefined });
-        console.log('previous data', id);
+        console.log('previous data', previous);
         if (previous) {
-            return await this.invalidate(id);
+            await this.invalidate(id);
+            return previous;
         }
     }
 
     protected invalidate(id: string): DocumentQuery<D, D> {
-        // const query= this.JSON.stringify({ originalId: id, deletedAt: null });
-        // const data = this.JSON.stringify({deletedAt: new Date()});
-        // console.log("query and data", {query: query}, {data: data}, Date.now() );
-        // const temp = this.model.update( {query: query}, data);
-        // console.log("temp is", temp);
-        // return temp;
         const query: any = { originalId: id, deletedAt: { $exists: false } };
         const data: any = { deletedAt: Date.now() };
         return this.model.updateOne(query, data);
@@ -83,7 +78,11 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
             return undefined;
         }
         console.log('Data inside update', data);
-        const newData = Object.assign(JSON.parse(JSON.stringify(prev)), data);
+        const dataToUpdate = {
+            originalId: data.originalId,
+            ...data.dataToUpdate
+        };
+        const newData = Object.assign(JSON.parse(JSON.stringify(prev)), dataToUpdate);
         console.log('new Data', newData);
         newData._id = VersionableRepository.generateObjectId();
         delete newData.deletedAt;
