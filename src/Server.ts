@@ -35,7 +35,7 @@ class Server {
       swaggerDefinition: {
           info: {
               title: 'Swagger javaScript-API',
-              description: 'description: Default available user are: For Head-trainer {"email":"testX@succesive.tech", "passoword": "123"} and for Trainee {"email":"testY@succesive.tech", "passoword": "stech@123"}',
+              description: 'description: Default available user are: For Head-trainer {"email":"testX@succesive.tech", "password": "123"} and for Trainee {"email":"testY@succesive.tech", "password": "stech@123"}',
               version: '1.0.0',
           },
           securityDefinitions: {
