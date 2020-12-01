@@ -11,7 +11,6 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
 
     constructor(model) {
         this.model = model;
-        this.JSON = JSON;
     }
 
     protected create(data: any): Promise<D> {
