@@ -9,8 +9,6 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
 
     private model: M;
 
-    private JSON;
-
     constructor(model) {
         this.model = model;
         this.JSON = JSON;
