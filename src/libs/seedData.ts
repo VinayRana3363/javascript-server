@@ -3,7 +3,6 @@ import config from '../config/configuration';
 
 const userRepository: UserRepository = new UserRepository();
 console.log(config.pass, typeof(config.pass));
-
 export default async() => {
     await userRepository.count({})
         .then(res => {

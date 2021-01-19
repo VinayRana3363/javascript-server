@@ -2,7 +2,7 @@
 const permissions = {
     'getUsers': {
         all: ['head-trainer'],
-        read: ['trainer'],
+        read: ['trainee', 'trainer'],
         write: ['trainee', 'trainer'],
         delete: [],
         create: [],

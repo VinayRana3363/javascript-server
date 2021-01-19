@@ -3,6 +3,7 @@ import * as bodyparser from 'body-parser';
 import { notFoundHandler, errorHandler } from './libs/routes';
 import * as swaggerUi from 'swagger-ui-express';
 import * as swaggerJsdoc from 'swagger-jsdoc';
+import * as cors from 'cors';
 import mainRouter from './router';
 import Databse from './libs/Database';
 
@@ -24,6 +25,7 @@ class Server {
   }
 
   public setupRoutes() {
+    this.app.use(cors());
     this.app.use((req, res, next) => {
       console.log('Body data', req.body);
       next();
